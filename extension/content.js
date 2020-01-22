@@ -1,7 +1,6 @@
 const xhr = new XMLHttpRequest();
 
 
-
 function createCommentBox() {
   const commentStyle = `
     position: absolute;
@@ -40,7 +39,7 @@ boxElement.children[0].addEventListener('submit', (e) => {
     hostname: location.hostname,
     path: location.href
   };
-  xhr.open('PUT', 'https://192.168.1.37:3000/', true);
+  xhr.open('PUT', 'https://10.242.185.98:3000/', true);
   xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
   xhr.send(JSON.stringify(data));
   resetBox();
@@ -63,9 +62,7 @@ function comment(sendResponse) {
     boxElement.style.top = top;
     boxElement.style.display = 'block';
     formInput.focus();
-
-    // console.log(rect.toJSON(), relative.toJSON());
-
+    
     sendResponse({message: 'success'});
   } else {
     sendResponse({message: 'selection collapsed'});
@@ -90,12 +87,12 @@ document.addEventListener('keyup', (e) => {
   }
 });
 
-document.addEventListener('mousedown', () => {
+formInput.addEventListener('blur', () => {
   resetBox();
 });
 
-document.addEventListener('scroll', () => {
-  resetBox();
-});
+// document.addEventListener('scroll', () => {
+//   resetBox();
+// });
 
 
