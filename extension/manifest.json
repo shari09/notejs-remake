@@ -15,5 +15,13 @@
     "default_title": "the remake of notejs by me",
     "default_popup": "popup.html"
   },
+  "commands": {
+    "comment": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+H"
+      },
+      "description": "allows the user to add a comment"
+    }    
+  },
   "manifest_version": 2
 }

@@ -1,28 +1,50 @@
+const xhr = new XMLHttpRequest();
 
-function createCommentBox(top, left) {
+
+
+function createCommentBox() {
   const commentStyle = `
     position: absolute;
-    display: block;
-    left: ${left};
-    top: ${top};
+    display: none;
+    left: 0px;
+    top: 0px;
+    z-index: 100;
   `;
 
   const commentBox = `
   <div id="notejsCommentBox" style="${commentStyle}">
-    <form action="" onsubmit="postData()" method="POST">
-      <input type="text" placeholder="Enter a comment" autofocus></input>
+    <form>
+      <input name="comment" type="text" placeholder="Enter a comment"></input>
       <input type="submit" value="Add"/>
     </form>
   </div>
   `;
   return commentBox;
 }
+console.log('sdfd');
 
+
+//injecting the box element into the page
+const commentBox = createCommentBox();
+document.body.innerHTML = commentBox + document.body.innerHTML;
+const boxElement = document.getElementById('notejsCommentBox');
+const formInput = boxElement.children[0].children[0];
 let highlightedText;
 
-function postData() {
-  console.log(highlightedText);
-}
+//send data to backend
+boxElement.children[0].addEventListener('submit', (e) => {
+  e.preventDefault();
+  const data = {
+    comment: formInput.value,
+    highlightedText: highlightedText,
+    hostname: location.hostname,
+    path: location.href
+  };
+  xhr.open('PUT', 'https://192.168.1.37:3000/', true);
+  xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+  xhr.send(JSON.stringify(data));
+  resetBox();
+});
 
 
 function comment(sendResponse) {
@@ -37,18 +59,11 @@ function comment(sendResponse) {
     const top = (rect.bottom-relative.top)+'px';
     const left = (rect.left-relative.left)+'px';
 
-    const boxElement = document.getElementById('notejsCommentBox');
+    boxElement.style.left = left;
+    boxElement.style.top = top;
+    boxElement.style.display = 'block';
+    formInput.focus();
 
-    if (boxElement) {
-      boxElement.style.left = left;
-      boxElement.style.top = top;
-    } else {
-      const commentBox = createCommentBox(top, left);
-      document.body.innerHTML += commentBox;
-      // const boxElement = new DOMParser().parseFromString(commentBox, 'text/xml');
-      // document.body.appendChild(boxElement);
-    }
-    
     // console.log(rect.toJSON(), relative.toJSON());
 
     sendResponse({message: 'success'});
@@ -62,3 +77,25 @@ chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
     comment(sendResponse);
   }
 });
+
+function resetBox() {
+  boxElement.style.display = 'none';
+  formInput.value = '';
+}
+
+//ways for the comment box to disappear
+document.addEventListener('keyup', (e) => {
+  if (e.key === 'Escape') {
+    resetBox();
+  }
+});
+
+document.addEventListener('mousedown', () => {
+  resetBox();
+});
+
+document.addEventListener('scroll', () => {
+  resetBox();
+});
+
+
