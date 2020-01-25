@@ -5,7 +5,7 @@ const express = require('express'),
 
 
 // const {check, validationResult} = require('express-validator');
-// const cors = require('cors');
+const cors = require('cors');
 require('dotenv').config({path: 'config/.env'});
 
 const MongoClient = require('mongodb').MongoClient;
@@ -15,25 +15,21 @@ const mongoUri = `mongodb+srv://
               @cluster0-kj3qd.mongodb.net/test?retryWrites=true&w=majority`;
 
 app.use(express.json());
-// app.use(cors());
+app.use(cors());
 
-
-
-const client = new MongoClient(mongoUri, {useUnifiedTopology: true});
-client.connect(err => {
-  const collection = client.db('test').collection('devices');
-  //perform actions on the collection obj
-  client.close();
-});
 
 
 function addToDatabase(commentObj) {
   console.log(commentObj);
 }
 
-app.put('/', (req, res) => {
+app.put('/comment', (req, res) => {
   addToDatabase(req.body);
-  res.end();
+  res.end('comment successfully retrieved');
+});
+
+app.get('/comment', (req, res) => {
+  res.end('hello');
 });
 
 const server = https.createServer({

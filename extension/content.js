@@ -1,4 +1,4 @@
-const xhr = new XMLHttpRequest();
+// const xhr = new XMLHttpRequest();
 
 
 function createCommentBox() {
@@ -30,6 +30,17 @@ const boxElement = document.getElementById('notejsCommentBox');
 const formInput = boxElement.children[0].children[0];
 let highlightedText;
 
+
+async function put(url, data) {
+  return await fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
+}
+
 //send data to backend
 boxElement.children[0].addEventListener('submit', (e) => {
   e.preventDefault();
@@ -39,9 +50,16 @@ boxElement.children[0].addEventListener('submit', (e) => {
     hostname: location.hostname,
     path: location.href
   };
-  xhr.open('PUT', 'https://10.242.185.98:3000/', true);
-  xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-  xhr.send(JSON.stringify(data));
+  // xhr.open('PUT', 'https://192.168.1.37:3000/', true);
+  // xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+  // xhr.send(JSON.stringify(data));
+  put('https://192.168.1.37:3000/comment', data).then(response => {
+    return response.text();
+  }).then(message => {
+    console.log(message);
+  }).catch(err => {
+    console.log(err.message);
+  });
   resetBox();
 });
 
