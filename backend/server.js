@@ -1,22 +1,34 @@
 const https = require('https');
 const fs = require('fs');
-const express = require('express'),
-      app = express();
-
-
+const express = require('express');
+const app = express();
 // const {check, validationResult} = require('express-validator');
 const cors = require('cors');
 require('dotenv').config({path: 'config/.env'});
 
-const MongoClient = require('mongodb').MongoClient;
-const mongoUri = `mongodb+srv://
-               ${process.env.DB_USER}
-              :${process.env.DB_PASSWORD}
-              @cluster0-kj3qd.mongodb.net/test?retryWrites=true&w=majority`;
 
+//middlewares
 app.use(express.json());
 app.use(cors());
 
+
+//mongodb stitch things
+const {
+  Stitch,
+  RemoteMongoClient,
+  AnonymousCredential
+} = require('mongodb-stitch-browser-sdk');
+
+const client = Stitch.initializeDefaultAppClient('user-auth-emnem');
+
+const db = client
+           .getServiceClient(RemoteMongoClient.factory, 'mongodb000')
+           .db('all-data');
+
+const emailPasswordClient = Stitch.defaultAppCLient.auth
+  .getProviderClient(UserPasswordAuthProviderClient.factory);
+
+emailPasswordClient.registerWithEmail()
 
 
 function addToDatabase(commentObj) {

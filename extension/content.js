@@ -1,4 +1,4 @@
-// const xhr = new XMLHttpRequest();
+require('dotenv').config({path: 'config/.env'});
 
 
 function createCommentBox() {
@@ -53,7 +53,7 @@ boxElement.children[0].addEventListener('submit', (e) => {
   // xhr.open('PUT', 'https://192.168.1.37:3000/', true);
   // xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
   // xhr.send(JSON.stringify(data));
-  put('https://192.168.1.37:3000/comment', data).then(response => {
+  put(`https://${process.env.IP}:${process.env.PORT}/comment`, data).then(response => {
     return response.text();
   }).then(message => {
     console.log(message);

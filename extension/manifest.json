@@ -1,6 +1,6 @@
 {
   "name": "NoteJS Remake",
-  "version": "1.0",
+  "version": "0.1.0",
   "description": "A remake of notejs extension part, hopefully it works",
   "permissions": ["declarativeContent", "activeTab", "storage", "contextMenus"],
   "background": {
@@ -13,7 +13,7 @@
   }],
   "browser_action": {
     "default_title": "the remake of notejs by me",
-    "default_popup": "popup.html"
+    "default_popup": "popup/popup.html"
   },
   "commands": {
     "comment": {

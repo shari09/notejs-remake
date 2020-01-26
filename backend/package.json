@@ -1,0 +1,15 @@
+{
+  "name": "notejs-server",
+  "version": "0.1.0",
+  "description": "the server side of notejs",
+  "dependencies": {
+    "express": "~4.17.1",
+    "cors": "~2.8.5",
+    "mongoose": "~5.8.9",
+    "mongodb-stitch-browser-sdk": "~4.8.0"
+  },
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "standard"
+  }
+}
