@@ -12,43 +12,31 @@ async function post(url, data) {
   });
 }
 
-const SignUp = (props) => {
-  const [email, setEmail] = useState('');
+const Login = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordConf, setPasswordConf] = useState('');
   
   const ip = '192.168.1.37';
   const port = '3000';
 
 
   const validateForm = () => {
-    return email.length > 0 
-           && password.length >= 6 
-           && password === passwordConf;
+    return username.length > 0 
+           && password.length >= 6;
   };
 
   const submitForm = () => {
     const data = {
-      email: email,
       username: username,
-      password: password,
-      passwordConf: passwordConf
+      password: password
     };
 
-    post(`https://${ip}:${port}/signUp`, data);
+    post(`https://${ip}:${port}/login`, data);
   };
 
   return (
     <div id="signUp">
       <Form onSubmit={submitForm}>
-        <Form.Group controlId="email">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email"
-                        value={email} onChange={e => setEmail(e.target.value)}
-                        required autoFocus/>
-          <Form.Text>Some random text here</Form.Text>
-        </Form.Group>
 
         <Form.Group controlId="username">
           <Form.Label>Username</Form.Label>
@@ -64,13 +52,6 @@ const SignUp = (props) => {
                         required/>
         </Form.Group>
 
-        <Form.Group controlId="passwordConf">
-          <Form.Label>Confirm password</Form.Label>
-          <Form.Control type="password" placeholder="Confirm password"
-                        value={passwordConf} onChange={e => setPasswordConf(e.target.value)}
-                        required/>
-        </Form.Group>
-
         <Button variant="primary" type="submit" disabled={!validateForm()}>Sign Up</Button>
       </Form>
     </div>
@@ -78,4 +59,4 @@ const SignUp = (props) => {
 
 };
 
-export default SignUp;
+export default Login;

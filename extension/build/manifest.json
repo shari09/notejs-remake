@@ -13,7 +13,7 @@
   }],
   "browser_action": {
     "default_title": "the remake of notejs by me",
-    "default_popup": "./index.html"
+    "default_popup": "index.html"
   },
   "commands": {
     "comment": {

@@ -16,6 +16,11 @@ function addToDatabase(commentObj) {
   console.log(commentObj);
 }
 
+app.post('/signUp', (req, res) => {
+  console.log(req.body);
+  res.end();
+});
+
 app.put('/comment', (req, res) => {
   addToDatabase(req.body);
   res.end('comment successfully retrieved');
