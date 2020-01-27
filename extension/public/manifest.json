@@ -1,0 +1,27 @@
+{
+  "name": "NoteJS Remake",
+  "version": "0.1.0",
+  "description": "A remake of notejs extension part, hopefully it works",
+  "permissions": ["declarativeContent", "activeTab", "storage", "contextMenus"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["content.js"]
+  }],
+  "browser_action": {
+    "default_title": "the remake of notejs by me",
+    "default_popup": "index.html"
+  },
+  "commands": {
+    "comment": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+H"
+      },
+      "description": "allows the user to add a comment"
+    }    
+  },
+  "manifest_version": 2
+}

@@ -12,25 +12,6 @@ app.use(express.json());
 app.use(cors());
 
 
-//mongodb stitch things
-const {
-  Stitch,
-  RemoteMongoClient,
-  AnonymousCredential
-} = require('mongodb-stitch-browser-sdk');
-
-const client = Stitch.initializeDefaultAppClient('user-auth-emnem');
-
-const db = client
-           .getServiceClient(RemoteMongoClient.factory, 'mongodb000')
-           .db('all-data');
-
-const emailPasswordClient = Stitch.defaultAppCLient.auth
-  .getProviderClient(UserPasswordAuthProviderClient.factory);
-
-emailPasswordClient.registerWithEmail()
-
-
 function addToDatabase(commentObj) {
   console.log(commentObj);
 }

@@ -7,17 +7,15 @@
     "url": "https://github.com/shari09/notejs-remake.git"
   },
   "dependencies": {
-    "notejs-extension": "^0.1.0",
-    "notejs-server": "^0.1.0"
   },
   "devDependencies": {
     "dotenv": "~8.2.0",
     "nodemon": "~2.0.2"
   },
   "scripts": {
-    "init": "npm install",
-    "start": "nodemon backend/server.js",
+    "postinstall": "cd backend/ && npm install && cd ../extension/ && npm install",
+    "start": "cd backend/ && npm start",
     "test": "standard",
-    "build": "react-sripts build"
+    "build": "cd extension && npm run build"
   }
 }
