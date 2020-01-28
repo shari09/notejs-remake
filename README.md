@@ -10,3 +10,8 @@ idk md file format
 * user auth (haha i have no idea how to do it which is what im stuck on rn)
 * db management (mmm this part should be pretty straight forward)
 * react native cross platform app (ive never touched android studio before) 
+
+
+
+you have to go in each subdir and run `npm install` cuz idk how to auto 
+do that with the root dir hehehhe... :))
