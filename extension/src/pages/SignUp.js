@@ -28,7 +28,8 @@ const SignUp = (props) => {
            && password === passwordConf;
   };
 
-  const submitForm = () => {
+  const submitForm = (event) => {
+    event.preventDefault();
     const data = {
       email: email,
       username: username,

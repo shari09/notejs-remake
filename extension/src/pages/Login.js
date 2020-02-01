@@ -25,7 +25,8 @@ const Login = (props) => {
            && password.length >= 6;
   };
 
-  const submitForm = () => {
+  const submitForm = (event) => {
+    event.preventDefault();
     const data = {
       username: username,
       password: password
@@ -40,7 +41,7 @@ const Login = (props) => {
 
         <Form.Group controlId="username">
           <Form.Label>Username</Form.Label>
-          <Form.Control type="text" placeholder="username"
+          <Form.Control type="text" placeholder="username" autoFocus
                         value={username} onChange={e => setUsername(e.target.value)}
                         required/>
         </Form.Group>

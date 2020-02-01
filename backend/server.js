@@ -21,6 +21,11 @@ app.post('/signUp', (req, res) => {
   res.end();
 });
 
+app.post('/login', (req, res) => {
+  console.log(req.body);
+  res.end();
+});
+
 app.put('/comment', (req, res) => {
   addToDatabase(req.body);
   res.end('comment successfully retrieved');
@@ -29,6 +34,8 @@ app.put('/comment', (req, res) => {
 app.get('/comment', (req, res) => {
   res.end('hello');
 });
+
+
 
 const server = https.createServer({
   key: fs.readFileSync('config/server.key'),

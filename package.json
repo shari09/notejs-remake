@@ -16,6 +16,6 @@
     "postinstall": "cd backend/ && npm install && cd ../extension/ && npm install",
     "start": "cd backend/ && npm start",
     "test": "standard",
-    "build": "cd extension && npm run build"
+    "build": "cd extension/ && npm run build"
   }
 }
