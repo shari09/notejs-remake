@@ -9,13 +9,13 @@ const pbkdf2 = util.promisify(crypto.pbkdf2);
 const UserSchema = new mongoose.Schema({
   email: {
     type: String,
-    // unique: true,
+    unique: true,
     required: true,
     trim: true
   },
   username: {
     type: String,
-    // unique: true,
+    unique: true,
     required: true,
     trim: true
   },
@@ -48,32 +48,30 @@ UserSchema.pre('save', async function(next) {
 
 // UserSchema.plugin(timestamp);
 
-// let UserModel = mongoose.model('User', UserSchema);
-
-UserSchema.statics.authenticate = async function(username, password) {
+UserSchema.statics.authenticate = async (username, password) => {
   return new Promise(async function(resolve, reject) {
     try {
       const user = await UserModel.findOne({username: username});
       if (!user) {
         reject(new Error('User not found'));
-      }
-      const hashed = await pbkdf2(password, 
-                                    user.salt, 
-                                    user.iteration,
-                                    128,
-                                    'sha256');
-      const passwordStr = hashed.toString('hex'); 
-      if (passwordStr === user.password) {
-        resolve(user._id);
-      }
+      } else {
+        const hashed = await pbkdf2(password, 
+                                      user.salt, 
+                                      user.iteration,
+                                      128,
+                                      'sha256');
+        const passwordStr = hashed.toString('hex'); 
+        if (passwordStr === user.password) {
+          resolve(user._id);
+        }
 
-      reject(new Error('Incorrect password'));
-    
+        reject(new Error('Incorrect password'));
+      }
     } catch (err) {
       console.log('Authentication error: ' + err.message);
     }
   });
 };
-UserModel = mongoose.model('User', UserSchema);
+const UserModel = mongoose.model('User', UserSchema);
 
 module.exports = UserModel;

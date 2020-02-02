@@ -12,6 +12,8 @@ const UserModel = require('./models/user.js');
 //mongodb stuff
 database.connect();
 
+let userId;
+
 async function addUser(data) {
   const user = new UserModel({
     email: data.email,
@@ -19,19 +21,14 @@ async function addUser(data) {
     password: data.password
   });
 
+  //save user data to database
   try {
     const doc = await user.save();
-    console.log(doc);
+    userId = doc._id;
   } catch (err) {
     console.log('Registering user error: ' + err.message);
   }
 }
-
-UserModel.authenticate('helele', 'abc123').then(id => {
-  console.log(id);
-}).catch(err => {
-  console.log(err);
-});
 
 //middlewares
 app.use(express.json());
@@ -42,32 +39,37 @@ function addToDatabase(commentObj) {
   console.log(commentObj);
 }
 
+//inconsistency with promise.then and async/await but that is fine :))
+
 app.post('/signUp', (req, res) => {
-  addUser(req.body);
-  res.end();
+  addUser(req.body).then(() => {
+    res.send({state: 'success'});
+  }).catch(err => {
+    console.log(err.message);
+    res.end();
+  });
 });
 
 app.post('/login', async (req, res) => {
   const data = req.body;
   try {
-    const userId = await UserModel.authenticate(data.username, data.password);
+    //get user id
+    userId = await UserModel.authenticate(data.username, data.password);
     console.log(userId);
+    res.send({state: 'success'});
   } catch (err) {
-    console.log(err.message);
+    res.send({state: err.message});
   }
-  
-  res.end();
 });
 
 app.put('/comment', (req, res) => {
   addToDatabase(req.body);
-  res.end('comment successfully retrieved');
+  res.send({state: 'comment successfully retrieved'});
 });
 
 app.get('/comment', (req, res) => {
   res.end('hello');
 });
-
 
 
 const server = https.createServer({

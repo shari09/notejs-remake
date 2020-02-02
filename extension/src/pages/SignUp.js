@@ -2,13 +2,21 @@ import React, {useState} from 'react';
 import {Button, Form} from 'react-bootstrap';
 
 
-async function post(url, data) {
-  return await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
+function post(url, data) {
+  return new Promise(async(resolve, reject) => {
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      resolve(response.json());
+    } catch (err) {
+      console.log('post err: ' + err.message);
+      reject(err);
+    }
   });
 }
 
@@ -28,7 +36,7 @@ const SignUp = (props) => {
            && password === passwordConf;
   };
 
-  const submitForm = (event) => {
+  const submitForm = async (event) => {
     event.preventDefault();
     const data = {
       email: email,
@@ -37,7 +45,10 @@ const SignUp = (props) => {
       passwordConf: passwordConf
     };
 
-    post(`https://${ip}:${port}/signUp`, data);
+    const res = await post(`https://${ip}:${port}/signUp`, data);
+    if (res.state === 'success') {
+      props.setLoggedIn(true);
+    }
   };
 
   return (
