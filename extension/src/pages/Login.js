@@ -36,7 +36,7 @@ const Login = (props) => {
   };
 
   return (
-    <div id="signUp">
+    <div id="login">
       <Form onSubmit={submitForm}>
 
         <Form.Group controlId="username">
@@ -53,7 +53,7 @@ const Login = (props) => {
                         required/>
         </Form.Group>
 
-        <Button variant="primary" type="submit" disabled={!validateForm()}>Sign Up</Button>
+        <Button variant="primary" type="submit" disabled={!validateForm()}>Log in</Button>
       </Form>
     </div>
   );
